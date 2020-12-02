@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+	<style>
+		body { background-color: #242C3C !important;}
+		
+		.container {
+			display: flex;
+			flex-direction: column;
+			justify-content: space-around;
+			margin: 10px;
+		}
+
+		.row {
+			margin: 5px;
+		}
+	</style>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.1/build/pure-min.css" integrity="sha384-oAOxQR6DkCoMliIh8yFnu25d7Eq/PHS21PClpwjOTeU2jRSq11vu66rf90/cZr47" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+	
+	<div class="container" id="app">
+		<div class="row">
+			<button class="pure-button pure-button-primary" id="scorebugToggle">
+				SCOREBUG
+			</button>
+		</div>
+		<div class="row">
+			<button class="pure-button pure-button-primary" onclick="sm('timeout', 'home')">
+				Take Home Timeout
+			</button>
+			<button class="pure-button pure-button-primary" onclick="sm('timeout', 'away')">
+				Take Away Timeout
+			</button>
+		</div>
+		<div class="row">
+			<button class="pure-button pure-button-primary" onclick="sm('slider', 'TOGGLE')">
+				STAT SLIDER
+			</button>
+			<select v-model="selected" onchange="sm('sliderStat', this.value)">
+				<option v-for="stat in stats" v-bind:value="stat">
+					{{ stat }}
+				</option>
+			</select>
+			<span>
+				{{ selected }}
+			</span>
+		</div>
+		<div class="row">
+			<button class="pure-button pure-button-primary" onclick="sm('slider2', 'TOGGLE')">
+				TEXT SLIDER
+			</button>
+		</div>
+		<div class="row">
+			<input style="color:black;" placeholder="Title" type="text" id="title">
+			<input style="color:black;" placeholder="Subtitle" type="text" id="subtitle">
+		</div>
+		<div class="row">
+			<button class="pure-button pure-button-primary" onclick="textup()">TAKE</button>
+		</div>
+		<div class="row">
+			<select onchange="preset(this.value)">
+				<option v-for="preset in textPresets" v-bind:value="preset.id">
+					{{ preset.id }}
+				</option>
+			</select>
+		</div>
+
+		<div class="row">
+			<button class="pure-button pure-button-primary" onclick="sm('homeLthSlider', 'TOGGLE')">
+				HOME LTH SLIDER
+			</button>
+		</div>
+		<div class="row">
+			<select id="selHome" v-model="selHome" onchange="homeplayerup(this)">
+				<option v-for="player in homePlayers" v-bind:value="player.num">
+					{{ player.name }}
+				</option>
+			</select>
+			<input style="color: black;" id="homeLthStat" type="text" placeholder="10 FG">
+			<button onclick="sm('homeLthStat', $('#homeLthStat')[0].value)">
+				TAKE HOME STAT
+			</button>
+			<span>{{ selHome.name }}</span>
+		</div>
+		
+		<div class="row">
+			<button class="pure-button pure-button-primary" onclick="sm('awayLthSlider', 'TOGGLE')">
+				AWAY LTH SLIDER
+			</button>
+			<select id="selHome" v-model="selHome" onchange="awayplayerup(this)">
+				<option v-for="player in awayPlayers" v-bind:value="player.num">
+					{{ player.name }}
+				</option>
+			</select>
+			<input style="color: black;" id="awayLthStat" type="text" placeholder="10 FG" onselect="sm('awayLthStat', this.value)">
+			<button onclick="sm('awayLthStat', $('#awayLthStat')[0].value)">
+				TAKE AWAY STAT
+			</button>
+			<span>{{ selHome.name }}</span>
+		</div>
+	</div>
+
+	<script>
+		const cfg = nodecg.bundleConfig
+		var app = new Vue({
+			el: '#app',
+			data: {
+				selected: "FG%",
+				title: "Title",
+				subtitle: "Subtitle",
+				stats: ['FG%', 'FGs', '3FG%', '3FGs', 'FT%',
+				'FTs', 'TOs', 'PtsOffTO', 'TotReb', 'DefReb',
+				'Off Reb', '2ndChPts', 'BenchPts', 'PtsPaint',
+				'FstBkPt', 'Blocks', 'Steals', 'Assts', 
+				'LeadTime'],
+				textPresets: cfg.textSliderPresets,
+				selHome: "Ben Simmons",
+				selHomeStat: "FG%",
+				selAway: "Ben Simmons",
+				selAwayStat: "FG%",
+				homePlayers: cfg.home.players,
+				awayPlayers: cfg.away.players
+			}
+		})
+
+		$('#scorebugToggle').click(() => nodecg.sendMessage('scorebug', 'TOGGLE'))
+		$('#billboardToggle').click(() => nodecg.sendMessage('billboard', 'TOGGLE'))
+
+		function textup() {
+			sm('textSliderTitle', $('#title')[0].value)
+			sm('textSliderSubtitle', $('#subtitle')[0].value)
+			app.title = $('#title')[0].value
+			app.subtitle = $('#subtitle')[0].value
+		}
+
+		function homeplayerup(a) {
+			console.log(a.value)
+			sm('homeLthNum', a.value)
+		}
+
+		function awayplayerup(a) {
+			sm('awayLthNum', a.value)
+		}
+
+		function preset(o) {
+			o = app.textPresets[o]
+			$('#title')[0].value = o.title
+			$('#subtitle')[0].value = o.subtitle
+		}
+
+		function sm(a,b) { nodecg.sendMessage(a, b) };
+	</script>
+</body>
+</html>

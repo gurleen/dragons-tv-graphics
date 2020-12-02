@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+	<style>
+		body { background-color: #242C3C !important;}
+		
+		.container {
+			display: flex;
+			flex-direction: column;
+			justify-content: space-around;
+			margin: 10px;
+		}
+
+		.row {
+			margin: 5px;
+        }
+        
+        #label {
+            color: white;
+        }
+	</style>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.1/build/pure-min.css" integrity="sha384-oAOxQR6DkCoMliIh8yFnu25d7Eq/PHS21PClpwjOTeU2jRSq11vu66rf90/cZr47" crossorigin="anonymous">
+</head>
+<body>
+	
+	<div class="container" id="app">
+		<div class="row">
+			<input style="color:black;" id="inp" type="text" placeholder="1st"> 
+			<button class="pure-button pure-button-primary" id="take">
+				TAKE
+			</button>
+		</div>
+	</div>
+
+	<script type="text/javascript">
+        const period = nodecg.Replicant('period')
+		$('#take').click(() => {
+			period.value = $('#inp')[0].value
+		});
+	</script>
+</body>
+</html>

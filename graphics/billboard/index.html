@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>DTV Billboard</title>
+	<link rel="stylesheet" type="text/css" href="styles.css">
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800&display=swap" rel="stylesheet">
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.2.2/gsap.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+</head>
+<body>
+
+<div id="app">
+	<div id="currentReadBox">
+		<img v-bind:src="currentRead" class="currentReadImg">
+	</div>
+
+	<div class="container" id="anim0">
+		<div class="teamBox" id="homeBox" v-bind:style="homeColor">
+
+			<img id="homeImg" class="teamImg anim1" v-bind:src="home.image">
+			<div class="anim1">
+				<span class="topLine">{{ home.univName }}</span><br>
+				<span class="bottomLine">{{ home.teamName }}</span>
+			</div>
+			<div class="scoreBox anim1" id="homeScore" v-bind:style="homeSecondary">
+				{{ homeScore }}
+			</div>
+		</div>
+		<div class="teamBox" id="awayBox" v-bind:style="awayColor">
+			<div class="scoreBox anim1r" id="awayScore" v-bind:style="awaySecondary">
+				{{ awayScore }}
+			</div>
+			<div class="anim1r">
+				<span class="topLine">{{ away.univName }}</span><br>
+				<span class="bottomLine">{{ away.teamName }}</span>
+			</div>
+			<img id="awayImg" class="teamImg anim2" v-bind:src="away.image">
+		</div>
+		<div class="periodText anim2" id="period">
+			{{ period }}
+		</div>
+		<img class="sponsorImg anim2" v-bind:src="currentSponsor">
+	</div>
+</div>
+
+<script type="text/javascript">
+	const cfg = nodecg.bundleConfig
+	var app = new Vue({
+		el: '#app',
+		data: {
+			home: cfg.home,
+			away: cfg.away,
+			period: "Start 1st",
+			homeScore: 0,
+			awayScore: 0,
+			currentSponsor: cfg.sponsors['ibew'].logoUrl,
+			currentRead: cfg.sponsors['ibew'].logoUrl,
+			homeColor: {
+				backgroundColor: cfg.home.colors.primary
+			},
+			homeSecondary: {
+				backgroundColor: cfg.home.colors.complement
+			},
+			awayColor: {
+				backgroundColor: cfg.away.colors.primary
+			},
+			awaySecondary: {
+				backgroundColor: cfg.away.colors.complement
+			},
+		},
+	})
+
+	var tl = gsap.timeline({paused: true, onComplete: () => {this.tl.seek(0); this.tl.pause()}})
+	tl.from("#anim0", {duration: 0.75, scaleX: 0, ease: "power4.inOut"})
+	  .from('.anim1', {duration: 0.75, x: -10, opacity: 0, ease: "power4.inOut"}, "-=0.5")
+	  .from('.anim1r', {duration: 0.75, x: 10, opacity: 0, ease: "power4.inOut"}, "-=.75")
+	  .from('.anim2', {duration: 0.75, opacity: 0, ease: "power4.inOut"}, "-=0.5")
+	  .addPause(1.5)
+	  .to("#anim0", {duration: .2, opacity: 0})
+
+	tl.reverse()
+	nodecg.listenFor('billboard', (msg) => tl.play())
+
+	var sponsorTl = gsap.timeline()
+	sponsorTl.from('#currentReadBox', {duration: 0.75, x: 50, opacity: 0, ease: "power4.inOut"})
+	sponsorTl.reverse()
+	nodecg.listenFor('billboardSponsor', (msg) => sponsorTl.reversed()? sponsorTl.play() : sponsorTl.reverse())
+
+	nodecg.listenFor('sponsorRead', (msg) => app.currentRead = cfg.sponsors[msg].logoUrl)
+
+	const period = nodecg.Replicant('period');
+	period.on('change', (a) => updatePeriod(a));
+	function updatePeriod(newPeriod) {
+		$('#period').fadeOut(200, () => {
+			app.period = newPeriod;
+			$('#period').fadeIn(300)
+		})
+	}
+</script>
+
+</body>
+</html>

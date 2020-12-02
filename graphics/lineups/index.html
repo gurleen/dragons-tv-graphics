@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>DTV Lineups</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800&display=swap" rel="stylesheet">
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.2.2/gsap.min.js"></script>
+</head>
+
+
+<body>
+
+<div id="app" style="width: 1920px; height: 1080px;">
+    <div class="container">
+        <div class="header">
+            <p class="title">STARTING LINEUPS</p>
+            <img class="sponsor" src="https://www.crownedgrace.com/wp-content/uploads/2016/02/independence.png">
+        </div>
+        <div id="home" class="lineup">
+            <div class="player">
+                <div class="colorbox imgbox">
+                    <img class="teamImg" v-bind:src="config.home.image">
+                </div>
+                <div class="textbox">
+                    <p class="uniName boxText">{{ config.home.univName.toUpperCase() }}</p>
+                    <p class="teamName boxText">{{ config.home.teamName.toUpperCase() }}</p>
+                </div>
+            </div>
+            <div v-for="player in homeLineup" :key="player.name" class="player">
+                <div class="colorbox" v-bind:style="{backgroundImage: `url(img/${player.lastName.toLowerCase()}.png)`}">
+                    <div class="stats">
+                        <p class="playerStat">{{ player.num }}</p>
+                        <p class="playerStat">{{ player.pos }}</p>
+                        <p class="playerStat">{{ player.yr}}</p>
+                    </div>
+                </div>
+                <div class="textbox">
+                    <p class="uniName boxText">{{ player.firstName.toUpperCase() }}</p>
+                    <p class="teamName boxText">{{ player.lastName.toUpperCase() }}</p>
+                </div>
+            </div>
+        </div>
+        <div id="away" class="lineup">
+            <div class="player">
+                <div class="colorbox imgbox">
+                    <img class="teamImg" v-bind:src="config.away.image">
+                </div>
+                <div class="textbox">
+                    <p class="uniName boxText">{{ config.away.univName.toUpperCase() }}</p>
+                    <p class="teamName boxText">{{ config.away.teamName.toUpperCase() }}</p>
+                </div>
+            </div>
+            <div v-for="player in awayLineup" :key="player.name" class="player">
+                <div class="colorbox" v-bind:style="{backgroundImage: `url(img/${player.lastName.toLowerCase()}.png)`}">
+                    <div class="stats">
+                        <p class="playerStat">{{ player.num }}</p>
+                        <p class="playerStat">{{ player.pos }}</p>
+                        <p class="playerStat">{{ player.yr}}</p>
+                    </div>
+                </div>
+                <div class="textbox">
+                    <p class="uniName boxText">{{ player.firstName.toUpperCase() }}</p>
+                    <p class="teamName boxText">{{ player.lastName.toUpperCase() }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+const cfg = nodecg.bundleConfig;
+var app = new Vue({
+    el: "#app",
+    data: {
+        config: cfg,
+        homeLineupArray: [],
+        awayLineupArray: []
+    },
+    computed: {
+        homeLineup: () => {
+            rv = []
+            for(num in this.homeLineupArray) {
+                rv.push(cfg.home.players[num])
+            }
+            return rv
+        },
+        awayLineup: () => {
+            rv = []
+            for(num in this.awayLineupArray) {
+                rv.push(cfg.away.players[num])
+            }
+            return rv
+        }
+    }
+})
+
+const homeLineup = nodecg.Replicant('homeLineup')
+homeLineup.on('change', (x) => { 
+    val = JSON.parse(x)
+    app.homeLineupArray = val? val : [] 
+})
+
+const awayLineup = nodecg.Replicant('awayLineup')
+awayLineup.on('change', (x) => { 
+    app.awayLineupArray = x? x : []
+})
+</script>
+
+</body>
+
+</html>
+
+
+
+
+
+

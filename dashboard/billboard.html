@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+	<style>
+		body { background-color: #242C3C !important;}
+		
+		.container {
+			display: flex;
+			flex-direction: column;
+			justify-content: space-around;
+			margin: 10px;
+		}
+
+		.row {
+			margin: 5px;
+		}
+	</style>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.1/build/pure-min.css" integrity="sha384-oAOxQR6DkCoMliIh8yFnu25d7Eq/PHS21PClpwjOTeU2jRSq11vu66rf90/cZr47" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+	
+	<div class="container" id="app">
+		<div class="row">
+			<button class="pure-button pure-button-primary" onclick="sm('billboard', 'TOGGLE')">
+				BILLBOARD
+			</button>
+		</div>
+		<div class="row">
+			<button class="pure-button pure-button-primary" onclick="sm('billboardSponsor', 'TOGGLE')">
+				SPONSOR
+			</button>
+			<select id="sponSelect" v-model="selected" onchange="sm('sponsorRead', this.value)">
+				<option v-for="spon in sponsors" v-bind:value="spon">
+					{{ spon }}
+				</option>
+			</select>
+			<span>
+				{{ selected }}
+			</span>
+		</div>
+	</div>
+
+	<script>
+		const cfg = nodecg.bundleConfig
+		const sponSelect = document.getElementById('sponSelect')
+		var app = new Vue({
+			el: '#app',
+			data: {
+				selected: 'ibx',
+				sponsors: Object.keys(cfg.sponsors)
+			}
+		})
+
+		function sm(a,b) { nodecg.sendMessage(a, b) };
+	</script>
+</body>
+</html>

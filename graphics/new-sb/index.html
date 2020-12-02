@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>DTV Scorebug</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800&display=swap" rel="stylesheet">
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.2.2/gsap.min.js"></script>
+	<script type="text/javascript" src="https://unpkg.com/tinycolor2@1.4.1/tinycolor.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+</head>
+<body>
+
+<div id="app">
+
+<div id="scorebug" class="container anim1">
+  <div class="teamArea anim2" id="homeArea" v-bind:style="homeColor">
+    <span class="teamName" id="homeName">
+      {{ homeName }}
+    </span>
+  </div>
+  <div class="scoreArea anim2" id="homeScoreArea" v-bind:style="homeSecondary">
+    <span class="score" id="homeScore">{{ homeScore }}</span>
+  </div>
+  <div class="teamArea anim2" id="awayArea" v-bind:style="awayColor">
+    <span class="teamName" id="awayName">
+      {{ awayName }}
+    </span>
+  </div>
+  <div class="scoreArea anim2" id="awayScoreArea" v-bind:style="awaySecondary">
+    <span class="score" id="awayScore">{{ awayScore }}</span>
+  </div>
+  <div class="infoArea anim2">
+    <span id="period">{{ period }}</span>
+    <span id="clock">{{ gameClock }}</span>
+  </div>
+  <div class="shotClockArea anim2">
+    <span id="shotClock">{{ shotClock }}</span>
+  </div>
+  
+  <div class="timeouts">
+  	<div class="singleTimeout" id="homeTO1"></div>
+  	<div class="singleTimeout" id="homeTO2"></div>
+  	<div class="singleTimeout" id="homeTO3"></div>
+  	<div class="singleTimeout" id="homeTO4"></div>
+  </div>
+
+  <div class="spacer"></div>
+
+  <div class="timeouts">
+  	<div class="singleTimeout" id="awayTO1"></div>
+  	<div class="singleTimeout" id="awayTO2"></div>
+  	<div class="singleTimeout" id="awayTO3"></div>
+  	<div class="singleTimeout" id="awayTO4"></div>
+  </div>
+
+</div>
+
+<div class="slider" id="slider1">
+	<div class="sliderTitleBox" id="slider1Anim2">
+		{{ compStat.statName }}
+	</div>
+	<div class="sliderContentArea sliderAnim2">
+		<strong>{{ homeName }}</strong>&emsp;{{ compStat.homeStat }}
+		&emsp;
+		<strong>{{ awayName }}</strong>&emsp;{{ compStat.awayStat }}
+	</div>
+</div>
+
+<div class="slider" id="slider2">
+	<div class="sliderTitleBox" id="slider2Anim2">
+		{{ textSlider.title }}
+	</div>
+	<div class="sliderContentArea slider2Anim2">
+		{{ textSlider.subtitle }}
+	</div>
+</div>
+
+<div class="slider" id="homeLthSlider">
+	<div class="sliderTitleBoxAlt" id="slider3Anim2" v-bind:style="homeColor">
+		<img v-bind:src="homeImg" class="lthImg">
+		<div class="numPosBox" v-bind:style="homeSecondary">
+			{{ homeLth.num }} <span id="divide"></span> {{ homeLth.pos }}
+		</div>
+	</div>
+	<div class="sliderContentArea" id="slider3Anim2">
+		<strong>{{ homeLth.name }}</strong>&emsp;{{ homeLth.stat }}
+	</div>
+</div>
+
+<div class="slider" id="awayLthSlider">
+	<div class="sliderTitleBoxAlt" id="slider4Anim2" v-bind:style="awayColor">
+		<img v-bind:src="awayImg" class="lthImg">
+		<div class="numPosBox" v-bind:style="awaySecondary">
+			{{ awayLth.num }} <span id="divide"></span> {{ awayLth.pos }}
+		</div>
+	</div>
+	<div class="sliderContentArea" id="slider4Anim2">
+		<strong>{{ awayLth.name }}</strong>&emsp;{{ awayLth.stat }}
+	</div>
+</div>
+
+</div>
+
+<script type="text/javascript">
+	const cfg = nodecg.bundleConfig
+	var app = new Vue({
+		el: '#app',
+		data: {
+			homeImg: cfg.home.image,
+			awayImg: cfg.away.image,
+			homeName: cfg.home.bugName,
+			awayName: cfg.away.bugName,
+			homeScore: 0,
+			homeTimeouts: 4,
+			awayTimeouts: 4,
+			homePlayers: cfg.home.players,
+			awayPlayers: cfg.away.players,
+			awayScore: 0,
+			homeColor: {
+				backgroundColor: cfg.home.colors.primary
+			},
+			homeSecondary: {
+				backgroundColor: cfg.home.colors.complement
+			},
+			awayColor: {
+				backgroundColor: cfg.away.colors.primary
+			},
+			awaySecondary: {
+				backgroundColor: cfg.away.colors.complement
+			},
+			period: '1st Half',
+			gameClock: '10:00',
+			shotClock: '20',
+			compStat: {
+				homeStat: "9/10",
+				awayStat: "3/14",
+				statName: "Field Goals"
+			},
+			textSlider: {
+				title: "Title",
+				subtitle: "Subtitle"
+			},
+			homeLth: {
+				num: "25",
+				pos: "G",
+				name: "Ben Simmons",
+				stat: "43% FG"
+			},
+			awayLth: {
+				num: "25",
+				pos: "G",
+				name: "Ben Simmons",
+				stat: "43% FG"
+			}
+		}
+	});
+
+	function setColor(team, color) {
+		if(team == 'home') {
+			app.homeColor.backgroundColor = color;
+			app.homeSecondary.backgroundColor = tinycolor(color).darken(10).toString();
+		} else if (team == 'away') {
+			app.awayColor.backgroundColor = color;
+			app.awaySecondary.backgroundColor = tinycolor(color).darken(10).toString();
+		}
+	}
+
+	function fadeTimeout(id) {
+		$(`#${id}`).fadeToggle(500).fadeToggle(500).fadeToggle(500).fadeToggle(500).fadeTo(500, 0.33)
+	}
+
+	function takeTimeout(team) {
+		var currTO = team === 'home'? app.homeTimeouts : app.awayTimeouts
+		fadeTimeout(`${team}TO${currTO}`)
+		if(team === 'home') { app.homeTimeouts--; } else { app.awayTimeouts--; }
+	}
+
+	// SCOREBUG ANIMATION
+	var tl = gsap.timeline({paused: true, onComplete: () => {this.tl.seek(0); this.tl.pause()}})
+	tl.from(".anim1", {duration: .75, scaleX: 0, transformOrigin: "left", ease: "power4.inOut"})
+	tl.from(".anim2", {duration: .5, y: 20, opacity: 0, stagger: 0.1}, "-=.5")
+	tl.addPause(1.5)
+	tl.to("#scorebug", {duration: .2, opacity: 0})
+	tl.reverse()
+	
+	// SLIDER ANIMATION
+	var slider1Tl = gsap.timeline()
+	slider1Tl.from("#slider1", {duration: .5, y: 36, opacity: 0, ease: "power4.inOut"})
+		.from('#slider1Anim2', {duration: .7, x: 10, opacity: 0, ease: "power4.inOut"}, "-=.5")
+	slider1Tl.reverse()
+
+	// TEXT SLIDER
+	var slider2Tl = gsap.timeline()
+	slider2Tl.from("#slider2", {duration: .5, y: 36, opacity: 0, ease: "power4.inOut"})
+		.from('#slider2Anim2', {duration: .7, x: 10, opacity: 0, ease: "power4.inOut"}, "-=.5")
+	slider2Tl.reverse()
+
+	var homeLthTl = gsap.timeline()
+	homeLthTl.from("#homeLthSlider", {duration: .5, y: 36, opacity: 0, ease: "power4.inOut"})
+		.from('#slider3Anim2', {duration: .7, x: 10, opacity: 0, ease: "power4.inOut"}, "-=.5")
+	homeLthTl.reverse()
+	
+	var awayLthTl = gsap.timeline()
+	awayLthTl.from("#awayLthSlider", {duration: .5, y: 36, opacity: 0, ease: "power4.inOut"})
+		.from('#slider4Anim2', {duration: .7, x: 10, opacity: 0, ease: "power4.inOut"}, "-=.5")
+	awayLthTl.reverse()
+
+	nodecg.listenFor('scorebug', (msg) => tl.play())
+	nodecg.listenFor('slider', (msg) => slider1Tl.reversed()? slider1Tl.play() : slider1Tl.reverse())
+	nodecg.listenFor('slider2', (msg) => slider2Tl.reversed()? slider2Tl.play() : slider2Tl.reverse())
+	nodecg.listenFor('homeLthSlider', (msg) => homeLthTl.reversed()? homeLthTl.play() : homeLthTl.reverse())
+	nodecg.listenFor('awayLthSlider', (msg) => awayLthTl.reversed()? awayLthTl.play() : awayLthTl.reverse())
+	nodecg.listenFor('sliderStat', (msg) => showStat(msg))
+	nodecg.listenFor('timeout', (team) => takeTimeout(team))
+	nodecg.listenFor('textSliderTitle', (title) => app.textSlider.title = title)
+	nodecg.listenFor('textSliderSubtitle', (sub) => app.textSlider.subtitle = sub)
+
+	var gameData;
+	const sb = nodecg.Replicant('gameStats');
+	sb.on('change', (newVal) => {
+		gameData = JSON.parse(JSON.stringify(sb.value));
+	});
+
+	nodecg.listenFor('homeLthNum', (num) => {
+		app.homeLth.num = num;
+		app.homeLth.name = app.homePlayers[num].name;
+		app.homeLth.pos = app.homePlayers[num].pos;
+	})
+
+	nodecg.listenFor('homeLthStat', (stat) => {
+		app.homeLth.stat = stat
+	})
+
+	nodecg.listenFor('awayLthNum', (num) => {
+		app.awayLth.num = num;
+		app.awayLth.name = app.awayPlayers[num].name;
+		app.awayLth.pos = app.awayPlayers[num].pos;
+	})
+
+	nodecg.listenFor('awayLthStat', (stat) => {
+		app.awayLth.stat = stat
+	})
+
+	const period = nodecg.Replicant('period');
+	period.on('change', (a) => updatePeriod(a));
+
+	function showStat(statName) {
+		var stat = gameData.comparison.find(x => x.STATISTIC === statName)
+		app.compStat.statName = stat.STATISTIC
+		app.compStat.homeStat = stat.DRX
+		app.compStat.awayStat = stat.COL
+	}
+
+	function updatePeriod(newPeriod) {
+		$('#period').fadeOut(200, () => {
+			app.period = newPeriod;
+			$('#period').fadeIn(300)
+		})
+	}
+
+	function updateScore(team, newScore) {
+		var id = team === "home"? "#homeScore" : "#awayScore"
+		$(id).fadeOut(200, () => {
+			if(team === "home") { app.homeScore = newScore} else { app.awayScore = newScore }
+			$(id).fadeIn(300)
+		})
+	}
+</script>
+
+</body>
+</html>

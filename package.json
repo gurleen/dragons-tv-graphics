@@ -1,0 +1,85 @@
+{
+  "name": "dragons-tv-graphics",
+  "version": "0.0.0",
+  "description": "Scorebug used by Drexel University Athletics in Philadelphia, PA.",
+  "homepage": "drexeldragons.tv",
+  "author": {
+    "name": "Gurleen Singh",
+    "email": "gs585@drexel.edu",
+    "url": "https://gurleen.dev/"
+  },
+  "files": [
+    "dashboard",
+    "graphics",
+    "extension.js",
+    "extension"
+  ],
+  "keywords": [
+    "",
+    "nodecg-bundle"
+  ],
+  "nodecg": {
+    "compatibleRange": "^1.1.1",
+    "dashboardPanels": [
+      {
+        "name": "toggle",
+        "title": "Scorebug",
+        "width": 3,
+        "file": "panel.html",
+        "headerColor": "#525F78"
+      },
+      {
+        "name": "billboard",
+        "title": "Billboard",
+        "width": 3,
+        "file": "billboard.html",
+        "headerColor": "#525F78"
+      },
+      {
+        "name": "gameInfo",
+        "title": "Game Info",
+        "width": 2,
+        "file": "game-info.html",
+        "headerColor": "#525F78"
+      },
+      {
+        "name": "clock",
+        "title": "Clock",
+        "width": 2,
+        "file": "clock.html",
+        "headerColor": "#525F78"
+      },
+      {
+        "name": "lineups",
+        "title": "Starting Lineups",
+        "width": 4,
+        "file": "lineups.html",
+        "headerColor": "#525F78"
+      }
+    ],
+    "graphics": [
+      {
+        "file": "new-sb/index.html",
+        "width": 1280,
+        "height": 720
+      },
+      {
+        "file": "billboard/index.html",
+        "width": 1280,
+        "height": 720
+      },
+      {
+        "file": "lineups/index.html",
+        "width": 1920,
+        "height": 1080
+      }
+    ]
+  },
+  "repository": "https://github.com/nodecg/nodecg.git",
+  "license": "unlicense",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.3",
+    "nodecg-vue": "^0.5.2",
+    "tabletojson": "^1.2.0"
+  }
+}

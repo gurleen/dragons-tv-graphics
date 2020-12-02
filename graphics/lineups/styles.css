@@ -1,0 +1,113 @@
+#app {
+    background-color: grey;
+    font-family: "Open Sans";
+}
+
+.container {
+	height: 700px;
+	width: 75%;
+	position: relative;
+    margin: auto;
+    top: 20%;
+    background-color: rgba(0,0,0,.7);
+
+    display: flex;
+    flex-wrap: wrap;
+	font-family: "Open Sans"
+}
+
+.header {
+    width: 100%;
+    height: 20%;
+    background-color: #00205b;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 30px;
+    padding-right: 30px;
+    font-size: 50px;
+    font-weight: 600;
+    color: white;
+}
+
+.sponsor {
+    height: 100%;
+    width: auto;
+}
+
+.lineup {
+    height: 39.5%;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.player {
+    height: 100%;
+    width: 239px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.colorbox {
+    height: 80%;
+    width: 100%;
+    background-color: #004c97;
+    background-size: cover;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.imgbox {
+    align-items: center;
+}
+
+.textbox {
+    height: 20%;
+    width: 100%;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: 10px;
+}
+
+.teamImg {
+    height: auto;
+    width: 80%;
+    left: 10px;
+}
+
+.playerImg {
+    padding-left: 30px;
+}
+
+.boxText {
+    margin: -4px;
+}
+
+.uniName {
+    font-size: 20px;
+}
+
+.teamName {
+    font-size: 25px;
+    font-weight: 600;
+}
+
+.playerStat {
+    color: rgba(211, 211, 211, 0.7);
+    font-size: 25px;
+    font-weight: 600;
+    padding-left: 10px;
+    margin: 5px;
+    text-align: center;
+}
+
+.stats {
+    padding-bottom: 60px;
+    left: 10px;
+    width: 20%;
+}

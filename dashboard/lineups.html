@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Starting Lineups</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+<div id="app">
+    <div class="flex flex-row">
+        
+    </div>
+</div>
+
+<script>
+    const cfg = nodecg.bundleConfig
+    const homeLineup = nodecg.Replicant('homeLineup')
+    const awayLineup = nodecg.Replicant('awayLineup')
+
+    var app = new Vue({
+        el: "#app",
+        data: {
+            cfg: cfg,
+            input: {
+                home: null,
+                away: null
+            },
+            home: Array(5).fill(-1),
+            away: Array(5).fill(-1)
+        },
+        methods: {
+            updateReplicants() {
+                homeLineup.value = JSON.stringify(this.home)
+                awayLineup.value = JSON.stringify(this.away)
+            }
+        }
+    })
+
+
+</script>
+
+</body>
+
+</html>
