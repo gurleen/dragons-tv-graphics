@@ -2,6 +2,8 @@
 	height: 720px;
 	width: 1280px;
 	color: white;
+	display: flex;
+	justify-content: center;
 }
 
 .container {
@@ -9,7 +11,6 @@
 	width: 860px;
 	position: relative;
 	top: 80%;
-	left: 240px;
 	background-color: black;
 	display: flex;
 	flex-wrap: wrap;

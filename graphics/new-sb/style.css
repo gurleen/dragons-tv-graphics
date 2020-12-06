@@ -2,12 +2,13 @@
   height: 720px;
   width: 1280px;
   color: transparent;
+  display: flex;
+  justify-content: center;
 }
 
 .container {
   position: relative;
   top: 85%;
-  left: 200px;
   height: 55px;
   width: 800px;
   background-color: rgba(0,0,0,0.9);
