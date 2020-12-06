@@ -85,6 +85,12 @@ awayStatsRep.on("change", (x) => app.awayStats = x.split(' '))
 
 nodecg.listenFor('toggleHalfStat', (_) => $('#app').fadeToggle(100))
 $("#app").fadeOut(0)
+
+const liveDataRep = nodecg.Replicant('liveData')
+liveDataRep.on('change', (x) => {
+	app.homeScore = x.homeScore
+	app.awayScore = x.awayScore
+})
 </script>
 
 

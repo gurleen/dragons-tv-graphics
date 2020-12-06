@@ -96,6 +96,12 @@
 			$('#period').fadeIn(300)
 		})
 	}
+
+	const liveDataRep = nodecg.Replicant('liveData')
+	liveDataRep.on('change', (x) => {
+		app.homeScore = x.homeScore
+		app.awayScore = x.awayScore
+	})
 </script>
 
 </body>
