@@ -40,9 +40,9 @@ p {
 .logo {
 	position: absolute;
 	height: 325px;
-	width: 400px;
+	width: 762px;
 	background-color: rgba(255,255,255,.7);
-	background-image: url('https://vista.today/wp-content/uploads/2019/03/Penn-Medicine-Logo.png');
+	background-image: url('PennMedNormal.png');
 	background-repeat: no-repeat;
 	background-position: center center;
 	margin-left: 760px;
