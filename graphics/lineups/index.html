@@ -15,7 +15,7 @@
     <div class="container">
         <div class="header">
             <p class="title">STARTING LINEUPS</p>
-            <img class="sponsor" src="https://www.crownedgrace.com/wp-content/uploads/2016/02/independence.png">
+            <img class="sponsor" src="https://www.cancergoldstandard.org/sites/default/files/organisation/IBC_RGB_Blue_300.png">
         </div>
         <div id="home" class="lineup">
             <div class="player">
@@ -27,12 +27,12 @@
                     <p class="teamName boxText">{{ config.home.teamName.toUpperCase() }}</p>
                 </div>
             </div>
-            <div v-for="player in homeLineup" :key="player.name" class="player">
-                <div class="colorbox" v-bind:style="{backgroundImage: `url(img/${player.lastName.toLowerCase()}.png)`}">
+            <div v-for="player in homeLineup" :key="player.num" class="player">
+                <div class="colorbox" v-bind:style="{backgroundImage: `url(${getImg('home', player.lastName)})`}">
                     <div class="stats">
                         <p class="playerStat">{{ player.num }}</p>
                         <p class="playerStat">{{ player.pos }}</p>
-                        <p class="playerStat">{{ player.yr}}</p>
+                        <p class="playerStat">{{ player.yr }}</p>
                     </div>
                 </div>
                 <div class="textbox">
@@ -51,12 +51,12 @@
                     <p class="teamName boxText">{{ config.away.teamName.toUpperCase() }}</p>
                 </div>
             </div>
-            <div v-for="player in awayLineup" :key="player.name" class="player">
-                <div class="colorbox" v-bind:style="{backgroundImage: `url(img/${player.lastName.toLowerCase()}.png)`}">
+            <div v-for="player in awayLineup" :key="player.num" class="player">
+                <div class="colorbox" v-bind:style="{backgroundImage: `url(${getImg('away', player.lastName)})`}">
                     <div class="stats">
                         <p class="playerStat">{{ player.num }}</p>
                         <p class="playerStat">{{ player.pos }}</p>
-                        <p class="playerStat">{{ player.yr}}</p>
+                        <p class="playerStat">{{ player.yr }}</p>
                     </div>
                 </div>
                 <div class="textbox">
@@ -69,7 +69,14 @@
 </div>
 
 <script>
-const cfg = nodecg.bundleConfig;
+const cfg = nodecg.bundleConfig
+const defaultPlayer = {
+    "firstName": "",
+    "lastName": "",
+    "num": "",
+    "pos": "",
+    "yr": ""
+}
 var app = new Vue({
     el: "#app",
     data: {
@@ -77,33 +84,47 @@ var app = new Vue({
         homeLineupArray: [],
         awayLineupArray: []
     },
+    methods: {
+        getPlayer: (team, num) => {
+            teamObj = team == "home"? cfg.home : cfg.away
+            found = teamObj.players.find(x => x.num == num) || defaultPlayer
+            return found
+        },
+        getImg: (team, name) => {
+            name = name.replace(/ |,/g, "")
+            name = name.replace(".", "")
+            url = `img/${team}/${name.toLowerCase()}.png`
+            return url
+        }
+    },
     computed: {
-        homeLineup: () => {
+        homeLineup: function () {
             rv = []
             for(num in this.homeLineupArray) {
-                rv.push(cfg.home.players[num])
+                playerNum = this.homeLineupArray[num]
+                rv.push(this.getPlayer("home", playerNum))
             }
             return rv
         },
-        awayLineup: () => {
+        awayLineup: function () {
             rv = []
             for(num in this.awayLineupArray) {
-                rv.push(cfg.away.players[num])
+                playerNum = this.awayLineupArray[num]
+                rv.push(this.getPlayer("away", playerNum))
             }
             return rv
         }
     }
 })
 
-const homeLineup = nodecg.Replicant('homeLineup')
-homeLineup.on('change', (x) => { 
-    val = JSON.parse(x)
-    app.homeLineupArray = val? val : [] 
+const homeLineupRep = nodecg.Replicant("homeLineupRep")
+homeLineupRep.on("change", (x) => {
+    app.homeLineupArray = x.split(" ")
 })
 
-const awayLineup = nodecg.Replicant('awayLineup')
-awayLineup.on('change', (x) => { 
-    app.awayLineupArray = x? x : []
+const awayLineupRep = nodecg.Replicant("awayLineupRep")
+awayLineupRep.on("change", (x) => {
+    app.awayLineupArray = x.split(" ")
 })
 </script>
 

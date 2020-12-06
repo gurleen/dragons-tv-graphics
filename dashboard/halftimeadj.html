@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Starting Lineups</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+<div id="app">
+    <div class="container">
+        <div class="flex flex-row my-2 justify-around">
+            <label for="first">First:</label>
+            <input v-model="input.first" type="text" name="first" class="text-black">
+            <button v-on:click="update('first')" class="bg-blue-500 p-1 rounded-md">Update</button>
+        </div>
+
+        <div class="flex flex-row my-2 justify-around">
+            <label for="second">Second:</label>
+            <input v-model="input.second" type="text" name="second" class="text-black">
+            <button v-on:click="update('second')" class="bg-blue-500 p-1 rounded-md">Update</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    const cfg = nodecg.bundleConfig
+    const firstRep = nodecg.Replicant('halftimeAdjFirst')
+    const secondRep = nodecg.Replicant('halftimeAdjSecond')
+
+    var app = new Vue({
+        el: "#app",
+        data: {
+            input: {
+                first: "",
+                second: ""
+            }
+        },
+        methods: {
+            update: (team) => {
+                if(team == "first") {
+                    firstRep.value = app.input.first
+                }
+                else {
+                    secondRep.value = app.input.second
+                }
+            }
+        }
+    })
+
+
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,84 @@
+.outer {
+	display: flex;
+	justify-content: center;
+}
+
+.container {
+	width: 65%;
+	height: 150px;
+	background-color: black;
+	color: white;
+	font-family: "Open Sans";
+	position: absolute;
+	bottom: 0;
+	z-index: 1;
+	display: flex;
+	flex-direction: column;
+	padding-left: 200px;
+	padding-right: 200px;
+}
+
+.homeTriangle {
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	width: 0;
+	height: 0;
+	border-style: solid;
+	border-width: 300px 0 0 300px;
+	z-index: 2;
+}
+
+.awayTriangle {
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	width: 0;
+	height: 0;
+	border-style: solid;
+	border-width: 0 0 300px 300px;
+	z-index: 2;
+}
+
+.teamImg {
+	position: absolute;
+	height: 150px;
+	width: auto;
+	bottom: 40px;
+	z-index: 3;
+}
+
+.awayImg {
+	right: 0;
+}
+
+.teamsRow {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	font-size: 30px;
+}
+
+.teamRow {
+	width: 50%;
+	display: flex;
+}
+
+.homeRow {
+	justify-content: flex-start;
+}
+
+.awayRow {
+	justify-content: flex-end;
+	padding-right: 30px;
+}
+
+.location {
+	display: flex;
+	justify-content: center;
+	font-size: 25px;
+	margin-top: -30px;
+	font-weight: 800;
+}
+
+

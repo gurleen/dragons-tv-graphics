@@ -130,7 +130,7 @@
 				backgroundColor: cfg.away.colors.complement
 			},
 			period: '1st Half',
-			gameClock: '10:00',
+			gameClock: '1:00',
 			shotClock: '20',
 			compStat: {
 				homeStat: "9/10",
@@ -155,6 +155,12 @@
 			}
 		}
 	});
+
+	function getPlayer(team, num) {
+        teamObj = team == "home"? cfg.home : cfg.away
+        found = teamObj.players.find(x => x.num == num) || defaultPlayer
+        return found
+    }
 
 	function setColor(team, color) {
 		if(team == 'home') {
@@ -223,9 +229,10 @@
 	});
 
 	nodecg.listenFor('homeLthNum', (num) => {
+		player = getPlayer("home", num)
 		app.homeLth.num = num;
-		app.homeLth.name = app.homePlayers[num].name;
-		app.homeLth.pos = app.homePlayers[num].pos;
+		app.homeLth.name = player.firstName + " " + player.lastName
+		app.homeLth.pos = player.pos
 	})
 
 	nodecg.listenFor('homeLthStat', (stat) => {
@@ -233,9 +240,10 @@
 	})
 
 	nodecg.listenFor('awayLthNum', (num) => {
+		player = getPlayer("away", num)
 		app.awayLth.num = num;
-		app.awayLth.name = app.awayPlayers[num].name;
-		app.awayLth.pos = app.awayPlayers[num].pos;
+		app.awayLth.name = player.firstName + " " + player.lastName
+		app.awayLth.pos = player.pos
 	})
 
 	nodecg.listenFor('awayLthStat', (stat) => {
@@ -266,6 +274,14 @@
 			$(id).fadeIn(300)
 		})
 	}
+
+	const liveDataRep = nodecg.Replicant('liveData')
+	liveDataRep.on('change', (x) => {
+		app.gameClock = x.clockStr
+		app.homeScore = x.homeScore
+		app.awayScore = x.awayScore
+		app.shotClock = x.shotClock
+	})
 </script>
 
 </body>

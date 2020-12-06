@@ -55,6 +55,20 @@
         "width": 4,
         "file": "lineups.html",
         "headerColor": "#525F78"
+      },
+      {
+        "name": "halfstats",
+        "title": "Halftime Stats",
+        "width": 4,
+        "file": "halftimestats.html",
+        "headerColor": "#525F78"
+      },
+      {
+        "name": "halftimeadj",
+        "title": "Halftime Adjustments",
+        "width": 4,
+        "file": "halftimeadj.html",
+        "headerColor": "#525F78"
       }
     ],
     "graphics": [
@@ -70,6 +84,21 @@
       },
       {
         "file": "lineups/index.html",
+        "width": 1920,
+        "height": 1080
+      },
+      {
+        "file": "halftime-adj/index.html",
+        "width": 1920,
+        "height": 1080
+      },
+      {
+        "file": "halftime-stats/index.html",
+        "width": 1920,
+        "height": 1080
+      },
+      {
+        "file": "locator/index.html",
         "width": 1920,
         "height": 1080
       }

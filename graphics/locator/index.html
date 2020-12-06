@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>DTV Locator</title>
+	<link rel="stylesheet" type="text/css" href="styles.css">
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800&display=swap" rel="stylesheet">
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.2.2/gsap.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+</head>
+<body>
+
+<div id="app">
+
+	<img class="teamImg" v-bind:src="home.image">
+	<div class="homeTriangle" v-bind:style="homeTriangleStyle"></div>
+	<img class="teamImg awayImg" v-bind:src="away.image">
+	<div class="awayTriangle" v-bind:style="awayTriangleStyle"></div>
+
+	<div class="outer">
+		<div class="container">
+			<div class="teamsRow">
+				<div class="teamRow homeRow">
+					<p>{{ home.univName }} <span style="font-weight: 700">{{ home.teamName }}</span></p>
+				</div>
+				<div class="teamRow awayRow">
+					<p>{{ away.univName }} <span style="font-weight: 700">{{ away.teamName }}</span></p>
+				</div>
+			</div>
+			<div class="location">
+				<p>DASKALAKIS ATHLETIC CENTER - PHILADELPHIA, PA</p>
+			</div>
+		</div>
+	</div>
+
+</div>
+
+<script type="text/javascript">
+	const cfg = nodecg.bundleConfig
+	var app = new Vue({
+		el: '#app',
+		data: {
+			home: cfg.home,
+			away: cfg.away,
+			period: "Start 1st",
+			homeScore: 0,
+			awayScore: 0,
+			currentSponsor: cfg.sponsors['ibew'].logoUrl,
+			currentRead: cfg.sponsors['ibew'].logoUrl,
+			homeColor: {
+				backgroundColor: cfg.home.colors.primary
+			},
+			homeSecondary: {
+				backgroundColor: cfg.home.colors.complement
+			},
+			awayColor: {
+				backgroundColor: cfg.away.colors.primary
+			},
+			awaySecondary: {
+				backgroundColor: cfg.away.colors.complement
+			},
+		},
+		computed: {
+			homeTriangleStyle: () => {
+				return {
+					borderColor: `transparent transparent transparent ${cfg.home.colors.complement}`
+				}
+			},
+			awayTriangleStyle: () => {
+				return {
+					borderColor: `transparent transparent ${cfg.away.colors.complement} transparent`
+				}
+			}
+		}
+	})
+</script>
+
+</body>
+</html>

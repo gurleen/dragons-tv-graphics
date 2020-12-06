@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>DTV Lineups</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800&display=swap" rel="stylesheet">
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.2.2/gsap.min.js"></script>
+	<script src="https://unpkg.com/underscore@1.12.0/underscore-min.js"></script>
+</head>
+
+
+<body>
+
+<div id="app" style="width: 1920px; height: 1080px;">
+	<div class="container">
+		<div class="header">
+			<p class="title">HALFTIME STATS</p>
+            <img class="sponsor" src="https://www.cancergoldstandard.org/sites/default/files/organisation/IBC_RGB_Blue_300.png">
+		</div>
+		<div class="teambar">
+			<div class="teammain homename" v-bind:style="homeColor">
+				<p>{{ home.univName }}</p>
+			</div>
+			<div class="teamscore" v-bind:style="homeSecondary">
+				{{ homeScore }}
+			</div>
+		</div>
+		<div class="teambar">
+			<div class="teamscore" v-bind:style="awaySecondary">
+				{{ awayScore }}
+			</div>
+			<div class="teammain awayname" v-bind:style="awayColor">
+				{{ away.univName }}
+			</div>
+		</div>
+		<div v-for="line in lines" class="statline">
+			<p>{{ line[0] }}</p>
+			<p class="statname">{{ line[1] }}</p>
+			<p>{{ line[2] }}</p>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+
+const cfg = nodecg.bundleConfig
+var app = new Vue({
+	el: "#app",
+	data: {
+		home: cfg.home,
+		away: cfg.away,
+		homeScore: 0,
+		awayScore: 0,
+		homeColor: {
+			backgroundColor: cfg.home.colors.primary
+		},
+		homeSecondary: {
+			backgroundColor: cfg.home.colors.complement
+		},
+		awayColor: {
+			backgroundColor: cfg.away.colors.primary
+		},
+		awaySecondary: {
+			backgroundColor: cfg.away.colors.complement
+		},
+		statNames: [],
+		homeStats: [],
+		awayStats: []
+	},
+	computed: {
+		lines: function() {
+			return _.zip(this.homeStats, this.statNames, this.awayStats)
+		}
+	}
+})
+
+const statNamesRep = nodecg.Replicant('statNamesRep')
+statNamesRep.on("change", (x) => app.statNames = x.split(' '))
+const homeStatsRep = nodecg.Replicant('homeHalfStatsRep')
+homeStatsRep.on("change", (x) => app.homeStats = x.split(' '))
+const awayStatsRep = nodecg.Replicant('awayHalfStatsRep')
+awayStatsRep.on("change", (x) => app.awayStats = x.split(' '))
+
+</script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,55 @@
+.container {
+	height: 325px;
+	width: 700px;
+	background-color: rgba(0,0,0,.7);
+	margin-top: 680px;
+	margin-left: 50px;
+}
+
+.header {
+	background-color: #00205b;
+	height: 25%;
+	width: 100%;
+}
+
+.body {
+	display: flex;
+	flex-direction: column;
+	flex-wrap: wrap;
+	padding-left: 20px;
+	padding-right: 20px;
+	word-wrap: normal;
+}
+
+p {
+	color: white;
+	font-size: 35px;
+	font-family: "Open Sans";
+	margin-top: 10px;
+	margin-bottom: 5px;
+}
+
+.title {
+	color: white;
+	font-size: 45px;
+	font-family: "Open Sans";
+	padding-top: 10px;
+	padding-left: 20px;
+}
+
+.logo {
+	position: absolute;
+	height: 325px;
+	width: 400px;
+	background-color: rgba(255,255,255,.7);
+	background-image: url('https://vista.today/wp-content/uploads/2019/03/Penn-Medicine-Logo.png');
+	background-repeat: no-repeat;
+	background-position: center center;
+	margin-left: 760px;
+	top: 680px;
+}
+
+
+
+
+

@@ -11,6 +11,12 @@
 <div id="app">
     <div class="container">
         <div class="flex flex-row my-2 justify-around">
+            <label for="away">Stat Names:</label>
+            <input v-model="input.statnames" type="text" name="away" class="text-black">
+            <button v-on:click="update('stat')" class="bg-blue-500 p-1 rounded-md">Update</button>
+        </div>
+
+        <div class="flex flex-row my-2 justify-around">
             <label for="home">Home:</label>
             <input v-model="input.home" type="text" name="home" class="text-black">
             <button v-on:click="update('home')" class="bg-blue-500 p-1 rounded-md">Update</button>
@@ -26,13 +32,15 @@
 
 <script>
     const cfg = nodecg.bundleConfig
-    const homeLineup = nodecg.Replicant('homeLineupRep')
-    const awayLineup = nodecg.Replicant('awayLineupRep')
+    const statNamesRep = nodecg.Replicant('statNamesRep')
+    const homeStatsRep = nodecg.Replicant('homeHalfStatsRep')
+    const awayStatsRep = nodecg.Replicant('awayHalfStatsRep')
 
     var app = new Vue({
         el: "#app",
         data: {
             input: {
+                statnames: "",
                 home: "",
                 away: ""
             }
@@ -40,10 +48,13 @@
         methods: {
             update: (team) => {
                 if(team == "home") {
-                    homeLineup.value = app.input.home
+                    homeStatsRep.value = app.input.home
+                }
+                else if(team == "away") {
+                    awayStatsRep.value = app.input.away
                 }
                 else {
-                    awayLineup.value = app.input.away
+                    statNamesRep.value = app.input.statnames
                 }
             }
         }

@@ -1,5 +1,4 @@
 #app {
-    background-color: grey;
     font-family: "Open Sans";
 }
 
@@ -31,8 +30,8 @@
 }
 
 .sponsor {
-    height: 100%;
-    width: auto;
+    height: auto;
+    width: 30%;
 }
 
 .lineup {
