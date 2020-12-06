@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>DTV Talent LTH</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800&display=swap" rel="stylesheet">
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.2.2/gsap.min.js"></script>
+</head>
+
+
+<body>
+
+<div id="app" style="width: 1920px; height: 1080px;">
+	<div class="container">
+		
+	</div>
+</div>
+
+<script type="text/javascript">
+	var app = new Vue({
+		el: "#app",
+		data: {
+			first: "This is the first halftime adjustment",
+			second: "This is the second halftime adjustment"
+		}
+	})
+
+	const firstRep = nodecg.Replicant('halftimeAdjFirst')
+	firstRep.on("change", (x) => app.first = x)
+	const secondRep = nodecg.Replicant('halftimeAdjSecond')
+	secondRep.on("change", (x) => app.second = x)
+</script>
+
+
+</body>
+
+</html>
