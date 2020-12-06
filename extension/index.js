@@ -14,13 +14,13 @@ module.exports = function (nodecg) {
 		const port = new serialport('COM1')
 		const parser = port.pipe(new readline({delimiter: '\x04'}))
 		parser.on('data', (x) => {
-			data = {
+			var cleanedData = {
 				'clockStr': x.slice(1,6),
 				'homeScore': x.slice(14, 16),
 				'awayScore': x.slice(17,19),
 				'shotClock': x.slice(9, 12)
 			}
-			liveData.value = data
+			liveData.value = cleanedData
 		})
 	}
 }
