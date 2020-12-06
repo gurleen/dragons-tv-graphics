@@ -11,7 +11,7 @@ module.exports = function (nodecg) {
 		'shotClock': "30"
 	}
 	if(process.platform == "win32") {
-		const port = new Serialport('COM1')
+		const port = new serialport('COM1')
 		const parser = port.pipe(new readline({delimiter: '\x04'}))
 		parser.on('data', (x) => {
 			data = {
