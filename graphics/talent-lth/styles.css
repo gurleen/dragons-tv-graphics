@@ -1,6 +1,35 @@
-.container {
+#app {
 	display: flex;
+	justify-content: center;
+}
+
+.container {
+	position: absolute;
+	bottom: 50px;
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
 	width: 910px;
 	height: 100px;
 	background-color: rgba(0,0,0,.7);
+}
+
+.talentName {
+	font-size: 30px;
+	font-family: "Open Sans";
+	color: white;
+}
+
+.lastName {
+	font-weight: bold;
+}
+
+.divider {
+	border-left: 1px solid white;
+	height: 75%;
+}
+
+.section {
+	display: flex;
+	justify-content: center;
 }

@@ -69,6 +69,20 @@
         "width": 4,
         "file": "halftimeadj.html",
         "headerColor": "#525F78"
+      },
+      {
+        "name": "talentlth",
+        "title": "Talent LTH",
+        "width": 4,
+        "file": "talent.html",
+        "headerColor": "#525F78"
+      },
+      {
+        "name": "fade",
+        "title": "Fade",
+        "width": 5,
+        "file": "fade.html",
+        "headerColor": "#525F78"
       }
     ],
     "graphics": [
@@ -99,6 +113,11 @@
       },
       {
         "file": "locator/index.html",
+        "width": 1920,
+        "height": 1080
+      },
+      {
+        "file": "talent-lth/index.html",
         "width": 1920,
         "height": 1080
       }

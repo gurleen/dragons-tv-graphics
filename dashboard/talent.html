@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Talent LTH</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+<div id="app">
+    <div class="container">
+        <div class="flex flex-row my-2 justify-around">
+            <label for="left">Left:</label>
+            <input v-model="input.left" type="text" name="left" class="text-black">
+            <button v-on:click="update('left')" class="bg-blue-500 p-1 rounded-md">Update</button>
+        </div>
+
+        <div class="flex flex-row my-2 justify-around">
+            <label for="right">right:</label>
+            <input v-model="input.right" type="text" name="right" class="text-black">
+            <button v-on:click="update('right')" class="bg-blue-500 p-1 rounded-md">Update</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    const cfg = nodecg.bundleConfig
+    const leftRep = nodecg.Replicant('talentLthLeft')
+    const rightRep = nodecg.Replicant('talentLthRight')
+
+    var app = new Vue({
+        el: "#app",
+        data: {
+            input: {
+                left: "",
+                right: ""
+            }
+        },
+        methods: {
+            update: (team) => {
+                if(team == "left") {
+                    leftRep.value = app.input.left
+                }
+                else {
+                    rightRep.value = app.input.right
+                }
+            }
+        }
+    })
+
+
+</script>
+
+</body>
+
+</html>

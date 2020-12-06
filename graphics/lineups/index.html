@@ -6,6 +6,7 @@
 	<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800&display=swap" rel="stylesheet">
 	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.2.2/gsap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 </head>
 
 
@@ -126,6 +127,9 @@ const awayLineupRep = nodecg.Replicant("awayLineupRep")
 awayLineupRep.on("change", (x) => {
     app.awayLineupArray = x.split(" ")
 })
+
+nodecg.listenFor('toggleStarters', (_) => $('#app').fadeToggle(100))
+$("#app").fadeOut(0)
 </script>
 
 </body>

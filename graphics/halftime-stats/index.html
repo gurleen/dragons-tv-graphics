@@ -7,6 +7,7 @@
 	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.2.2/gsap.min.js"></script>
 	<script src="https://unpkg.com/underscore@1.12.0/underscore-min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 </head>
 
 
@@ -82,6 +83,8 @@ homeStatsRep.on("change", (x) => app.homeStats = x.split(' '))
 const awayStatsRep = nodecg.Replicant('awayHalfStatsRep')
 awayStatsRep.on("change", (x) => app.awayStats = x.split(' '))
 
+nodecg.listenFor('toggleHalfStat', (_) => $('#app').fadeToggle(100))
+$("#app").fadeOut(0)
 </script>
 
 

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Fade</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+<div id="app">
+    <div class="container flex mx-2">
+        <button class="bg-blue-500 p-1 rounded-md" v-on:click="sm('toggleHalfStat', '')">TOGGLE HALFTIME STATS</button>
+        <button class="bg-blue-500 p-1 rounded-md" v-on:click="sm('toggleHalfAdj', '')">TOGGLE HALFTIME ADJ</button>
+        <button class="bg-blue-500 p-1 rounded-md" v-on:click="sm('toggleLocator', '')">TOGGLE LOCATOR</button>
+        <button class="bg-blue-500 p-1 rounded-md" v-on:click="sm('toggleTalentLth', '')">TOGGLE TALENT LTH</button>
+        <button class="bg-blue-500 p-1 rounded-md" v-on:click="sm('toggleStarters', '')">TOGGLE STARTERS</button>
+    </div>
+</div>
+
+<script>
+    const cfg = nodecg.bundleConfig
+
+    var app = new Vue({
+        el: "#app",
+        methods: {
+            sm: (x, m) => nodecg.sendMessage(x, m)
+        }
+    })
+
+
+</script>
+
+</body>
+
+</html>

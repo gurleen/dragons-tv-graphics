@@ -6,6 +6,7 @@
 	<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800&display=swap" rel="stylesheet">
 	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.2.2/gsap.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 </head>
 
 
@@ -13,7 +14,13 @@
 
 <div id="app" style="width: 1920px; height: 1080px;">
 	<div class="container">
-		
+		<div class="section">
+			<p class="talentName">{{ left[0] }} <span class="lastName">{{ left[1] }}</span></p>
+		</div>
+		<div class="divider"></div>
+		<div class="section">
+			<p class="talentName">{{ right[0] }} <span class="lastName">{{ right[1] }}</span></p>
+		</div>
 	</div>
 </div>
 
@@ -21,15 +28,26 @@
 	var app = new Vue({
 		el: "#app",
 		data: {
-			first: "This is the first halftime adjustment",
-			second: "This is the second halftime adjustment"
+			left: ["", ""],
+			right: ["", ""]
 		}
 	})
 
-	const firstRep = nodecg.Replicant('halftimeAdjFirst')
-	firstRep.on("change", (x) => app.first = x)
-	const secondRep = nodecg.Replicant('halftimeAdjSecond')
-	secondRep.on("change", (x) => app.second = x)
+	const leftRep = nodecg.Replicant('talentLthLeft')
+	leftRep.on("change", (x) => { 
+		if(typeof x == "undefined") return;
+		app.left = x.split(" ")
+	})
+	leftRep.value = "Person A"
+	const rightRep = nodecg.Replicant('talentLthRight')
+	rightRep.on("change", (x) => { 
+		if(typeof x == "undefined") return;
+		app.right = x.split(" ")
+	})
+	rightRep.value = "Person B"
+
+	nodecg.listenFor('toggleTalentLth', (_) => $('#app').fadeToggle(100))
+	$("#app").fadeOut(0)
 </script>
 
 
