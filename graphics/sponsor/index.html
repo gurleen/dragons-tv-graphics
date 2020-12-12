@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>DTV Sponsor</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800&display=swap" rel="stylesheet">
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.2.2/gsap.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+</head>
+
+
+<body>
+
+<div id="app" style="width: 1920px; height: 1080px;">
+	<div id="currentReadBox">
+		<img v-bind:src="currentRead" class="currentReadImg">
+	</div>
+</div>
+
+<script type="text/javascript">
+	const cfg = nodecg.bundleConfig
+	var app = new Vue({
+		el: "#app",
+		data: {
+			currentSponsor: cfg.sponsors['IBEW'].logoUrl,
+			currentRead: cfg.sponsors['IBEW'].logoUrl
+		}
+	})
+
+	var sponsorTl = gsap.timeline()
+	sponsorTl.from('#currentReadBox', {duration: 0.75, y: 150, opacity: 0, ease: "power4.inOut"})
+	sponsorTl.reverse()
+	nodecg.listenFor('billboardSponsor', (msg) => sponsorTl.reversed()? sponsorTl.play() : sponsorTl.reverse())
+
+	nodecg.listenFor('sponsorRead', (msg) => app.currentRead = cfg.sponsors[msg].logoUrl)
+</script>
+
+
+</body>
+
+</html>

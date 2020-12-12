@@ -1,0 +1,15 @@
+#app {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+#currentReadBox {
+	background-color: #131313;
+	padding: 10px;
+}
+
+.currentReadImg {
+	height: 300px;
+	width: auto;
+}

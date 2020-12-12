@@ -4,6 +4,7 @@
 	color: white;
 	display: flex;
 	justify-content: center;
+	align-items: center;
 }
 
 .container {
@@ -82,10 +83,6 @@
 }
 
 #currentReadBox {
-	position: absolute;
-	z-index: -1;
-	left: 247px;
-	top: 60%;
 	background-color: #131313;
 	padding: 10px;
 }

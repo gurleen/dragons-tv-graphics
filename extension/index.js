@@ -1,6 +1,8 @@
 'use strict';
 const serialport = require('serialport')
 const readline = require('@serialport/parser-readline')
+const {FtpSrv, FileSystem} = require('ftp-srv')
+
 
 module.exports = function (nodecg) {
 	const liveData = nodecg.Replicant('liveData')

@@ -120,6 +120,11 @@
         "file": "talent-lth/index.html",
         "width": 1920,
         "height": 1080
+      },
+      {
+        "file": "sponsor/index.html",
+        "width": 1920,
+        "height": 1080
       }
     ]
   },
