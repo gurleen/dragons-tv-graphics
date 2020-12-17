@@ -12,25 +12,7 @@
 
 <div id="app">
 
-	<img class="teamImg" v-bind:src="home.image">
-	<div class="homeTriangle" v-bind:style="homeTriangleStyle"></div>
-	<img class="teamImg awayImg" v-bind:src="away.image">
-	<div class="awayTriangle" v-bind:style="awayTriangleStyle"></div>
-
-	<div class="outer">
-		<div class="container">
-			<div class="teamsRow">
-				<div class="teamRow homeRow">
-					<p>{{ home.univName }} <span style="font-weight: 700">{{ home.teamName }}</span></p>
-				</div>
-				<div class="teamRow awayRow">
-					<p>{{ away.univName }} <span style="font-weight: 700">{{ away.teamName }}</span></p>
-				</div>
-			</div>
-			<div class="location">
-				<p>DASKALAKIS ATHLETIC CENTER - PHILADELPHIA, PA</p>
-			</div>
-		</div>
+	<div class="main-logo" style="background-image: url('CAA.png');">
 	</div>
 
 </div>
@@ -73,7 +55,6 @@
 	})
 
 	nodecg.listenFor('toggleLocator', (_) => $('#app').fadeToggle(100))
-	$("#app").fadeOut(0)
 </script>
 
 </body>
