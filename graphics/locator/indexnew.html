@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>DTV Locator</title>
+	<link rel="stylesheet" type="text/css" href="styles.css">
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800&display=swap" rel="stylesheet">
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.2.2/gsap.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+</head>
+<body>
+
+<div id="app">
+
+	<div class="main-logo" style="background-image: url('CAA.png');">
+	</div>
+
+</div>
+
+<script type="text/javascript">
+	const cfg = nodecg.bundleConfig
+	var app = new Vue({
+		el: '#app',
+		data: {
+			home: cfg.home,
+			away: cfg.away,
+			period: "Start 1st",
+			homeScore: 0,
+			awayScore: 0,
+			homeColor: {
+				backgroundColor: cfg.home.colors.primary
+			},
+			homeSecondary: {
+				backgroundColor: cfg.home.colors.complement
+			},
+			awayColor: {
+				backgroundColor: cfg.away.colors.primary
+			},
+			awaySecondary: {
+				backgroundColor: cfg.away.colors.complement
+			},
+		},
+		computed: {
+			homeTriangleStyle: () => {
+				return {
+					borderColor: `transparent transparent transparent ${cfg.home.colors.complement}`
+				}
+			},
+			awayTriangleStyle: () => {
+				return {
+					borderColor: `transparent transparent ${cfg.away.colors.complement} transparent`
+				}
+			}
+		}
+	})
+
+	nodecg.listenFor('toggleLocator', (_) => $('#app').fadeToggle(100))
+</script>
+
+</body>
+</html>

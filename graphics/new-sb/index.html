@@ -14,14 +14,6 @@
 <div id="app">
 
 <div id="scorebug" class="container anim1">
-  <div class="teamArea anim2" id="homeArea" v-bind:style="homeColor">
-    <span class="teamName" id="homeName">
-      {{ homeName }}
-    </span>
-  </div>
-  <div class="scoreArea anim2" id="homeScoreArea" v-bind:style="homeSecondary">
-    <span class="score" id="homeScore">{{ homeScore }}</span>
-  </div>
   <div class="teamArea anim2" id="awayArea" v-bind:style="awayColor">
     <span class="teamName" id="awayName">
       {{ awayName }}
@@ -29,6 +21,14 @@
   </div>
   <div class="scoreArea anim2" id="awayScoreArea" v-bind:style="awaySecondary">
     <span class="score" id="awayScore">{{ awayScore }}</span>
+  </div>
+  <div class="teamArea anim2" id="homeArea" v-bind:style="homeColor">
+    <span class="teamName" id="homeName">
+      {{ homeName }}
+    </span>
+  </div>
+  <div class="scoreArea anim2" id="homeScoreArea" v-bind:style="homeSecondary">
+    <span class="score" id="homeScore">{{ homeScore }}</span>
   </div>
   <div class="infoArea anim2">
     <span id="period">{{ period }}</span>
