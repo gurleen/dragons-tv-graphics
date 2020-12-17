@@ -83,8 +83,13 @@ homeStatsRep.on("change", (x) => app.homeStats = x.split(' '))
 const awayStatsRep = nodecg.Replicant('awayHalfStatsRep')
 awayStatsRep.on("change", (x) => app.awayStats = x.split(' '))
 
-nodecg.listenFor('toggleHalfStat', (_) => $('#app').fadeToggle(100))
-$("#app").fadeOut(0)
+var tl = gsap.timeline({paused: true, onComplete: () => {this.tl.seek(0); this.tl.pause()}})
+	tl.from("#app", {duration: .2, opacity: 0})
+	  .addPause(1.5)
+	  .to("#app", {duration: .2, opacity: 0})
+
+	tl.reverse()
+	nodecg.listenFor('toggleHalfStat', (msg) => tl.play())
 
 const liveDataRep = nodecg.Replicant('liveData')
 liveDataRep.on('change', (x) => {
