@@ -41,8 +41,13 @@
 	const secondRep = nodecg.Replicant('halftimeAdjSecond')
 	secondRep.on("change", (x) => app.second = x)
 
-	nodecg.listenFor('toggleHalfAdj', (_) => $('#app').fadeToggle(100))
-	$("#app").fadeOut(0)
+	var tl = gsap.timeline({paused: true, onComplete: () => {this.tl.seek(0); this.tl.pause()}})
+	tl.from("#app", {duration: .2, opacity: 0})
+	  .addPause(1.5)
+	  .to("#app", {duration: .2, opacity: 0})
+
+	tl.reverse()
+	nodecg.listenFor('toggleHalfAdj', (msg) => tl.play())
 </script>
 
 
