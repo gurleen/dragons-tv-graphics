@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>DTV LTH</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800&display=swap" rel="stylesheet">
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.2.2/gsap.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+</head>
+
+
+<body>
+
+<div id="app" style="width: 1920px; height: 1080px;">
+    <div class="outer">
+        <div class="logoBox" v-bind:style="awayColor">
+            <img class="logo" v-bind:src="away.image">
+        </div>
+        <div class="col">
+            <div class="titleBar" v-bind:style="awayColor">
+                <div class="numPosBox">
+                    {{ player.num }} <span id="divide"></span> {{ player.pos }}
+                </div>
+                <div class="playerName">
+                    {{ player.firstName.toUpperCase() }} {{ player.lastName.toUpperCase() }}
+                </div>
+            </div>
+            <div class="statArea">  {{ stat }}</div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    const cfg = nodecg.bundleConfig
+	var app = new Vue({
+		el: "#app",
+		data: {
+            away: cfg.away,
+            awayColor: {
+				backgroundColor: cfg.away.colors.primary
+            },
+            player: {"firstName": "", "lastName": "", "num": "0", "pos": "G", "yr": ""},
+            stat: ""
+		}
+    })
+
+    function getPlayer(num) {
+        defaultPlayer = {"firstName": "", "lastName": "", "num": "0", "pos": "G", "yr": ""}
+        found = cfg.away.players.find(x => x.num == num) || defaultPlayer
+        return found
+    }
+    
+    nodecg.listenFor('awayLowerThirdPlayer', (msg) => {
+        console.log(msg)
+        app.player = getPlayer(msg)
+    })
+    nodecg.listenFor('awayLowerThirdStat', (msg) => {
+        console.log(msg)
+        app.stat = msg
+    })
+
+	var tl = gsap.timeline({paused: true, onComplete: () => {this.tl.seek(0); this.tl.pause()}})
+	tl.from("#app", {duration: .2, opacity: 0})
+	  .addPause(1.5)
+	  .to("#app", {duration: .2, opacity: 0})
+
+	tl.reverse()
+    nodecg.listenFor('toggleAwayLowerThird', (msg) => tl.play())
+</script>
+
+
+</body>
+
+</html>

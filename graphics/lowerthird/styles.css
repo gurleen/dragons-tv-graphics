@@ -1,0 +1,82 @@
+#app {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+}
+
+.outer {
+    height: 143px;
+    width: 1333px;
+    background-color: black;
+    display: flex;
+    flex-wrap: wrap;
+    color: white;
+    font-family: "Open Sans";
+    margin-bottom: 100px;
+}
+
+.logoBox {
+    width: 220px;
+    height: 143px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.titleBar {
+    height: 48px;
+    width: 1113px;
+    display: flex;
+    align-items: center;
+}
+
+.statArea { 
+    height: 95px;
+    width: 1113px;
+    display: flex;
+    align-items: center;
+    white-space: pre-wrap;
+    font-size: 45px;
+}
+
+.logo {
+    height: 90%;
+    width: auto;
+}
+
+.numPosBox {
+    height: 75%;
+    width: 10%;
+    padding-left: 4px;
+    padding-right: 4px;
+    padding-top: 1px;
+    padding-bottom: 1px;
+    border-radius: 3px;
+    border: 1px solid grey;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    font-size: 25px;
+}
+
+#divide {
+    width: 1px;
+    height: 75%;
+    background-color: white;
+}
+
+.playerName {
+    font-size: 30px;
+    font-weight: 600;
+    padding-left: 20px;
+}
+
+.stat {
+    font-size: 40px;
+    font-weight: 200;
+}
+
+.amt {
+    font-size: 45px;
+    font-weight: bold;
+}

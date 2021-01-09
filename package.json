@@ -83,6 +83,13 @@
         "width": 5,
         "file": "fade.html",
         "headerColor": "#525F78"
+      },
+      {
+        "name": "lth",
+        "title": "Lower Third",
+        "width": 5,
+        "file": "lowerthird.html",
+        "headerColor": "#525F78"
       }
     ],
     "graphics": [
@@ -123,6 +130,16 @@
       },
       {
         "file": "sponsor/index.html",
+        "width": 1920,
+        "height": 1080
+      },
+      {
+        "file": "lowerthird/home.html",
+        "width": 1920,
+        "height": 1080
+      },
+      {
+        "file": "lowerthird/away.html",
         "width": 1920,
         "height": 1080
       }

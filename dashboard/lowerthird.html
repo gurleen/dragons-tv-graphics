@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Talent LTH</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+<div id="app" style="color: black;">
+    <select v-model="selHome" v-on:change="update('home', selHome)">
+        <option v-for="stat in home" v-bind:value="stat">
+            {{ stat.player }} - {{ stat.stat }}
+        </option>
+    </select>
+
+    <button v-on:click="toggle('home')">
+        GO HOME LOWER THIRD
+    </button>
+
+    <select v-model="selAway" v-on:change="update('away', selAway)">
+        <option v-for="stat in away" v-bind:value="stat">
+            {{ stat.player }} - {{ stat.stat }}
+        </option>
+    </select>
+
+    <button v-on:click="toggle('away')">
+        GO AWAY LOWER THIRD
+    </button>
+</div>
+
+<script>
+    const cfg = nodecg.bundleConfig
+
+    sm = (a, b) => nodecg.sendMessage(a, b)
+
+    var app = new Vue({
+        el: "#app",
+        data: {
+            selHome: {},
+            selAway: {},
+            home: cfg.home.lth,
+            away: cfg.away.lth
+        },
+        methods: {
+            update: (team, obj) => {
+                console.log(team, obj)
+                sm(`${team}LowerThirdPlayer`, obj.player)
+                sm(`${team}LowerThirdStat`, obj.stat)
+            },
+            toggle: (team) => {
+                msg = team == "home"? "toggleHomeLowerThird" : "toggleAwayLowerThird"
+                sm(msg, '')
+            }
+        }
+    })
+
+
+</script>
+
+</body>
+
+</html>
