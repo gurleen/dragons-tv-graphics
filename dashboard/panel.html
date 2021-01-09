@@ -92,7 +92,7 @@
 			<button class="pure-button pure-button-primary" onclick="sm('awayLthSlider', 'TOGGLE')">
 				AWAY LTH SLIDER
 			</button>
-			<select id="selHome" v-model="selHome" onchange="awayplayerup(this)">
+			<select id="selAway" v-model="selAway" onchange="awayplayerup(this)">
 				<option v-for="player in awayPlayers" v-bind:value="player.num">
 					{{ player.firstName + " " + player.lastName }}
 				</option>
@@ -113,11 +113,7 @@
 				selected: "FG%",
 				title: "Title",
 				subtitle: "Subtitle",
-				stats: ['FG%', 'FGs', '3FG%', '3FGs', 'FT%',
-				'FTs', 'TOs', 'PtsOffTO', 'TotReb', 'DefReb',
-				'Off Reb', '2ndChPts', 'BenchPts', 'PtsPaint',
-				'FstBkPt', 'Blocks', 'Steals', 'Assts', 
-				'LeadTime'],
+				stats: ["fgm", "fga", "fgm3", "fga3", "ftm", "fta", "tp", "blk", "stl", "ast", "min", "oreb", "dreb", "treb", "pf", "tf", "to", "dq", "fgpct", "fg3pct", "ftpct", "$t"], 
 				textPresets: cfg.textSliderPresets,
 				selHome: "Ben Simmons",
 				selHomeStat: "FG%",

@@ -153,6 +153,7 @@
   font-family: "Open Sans";
   font-weight: 600;
   color: white;
+  white-space: pre-wrap;
 }
 
 .comparisonStat {

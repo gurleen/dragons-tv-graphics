@@ -65,9 +65,7 @@
 		{{ compStat.statName }}
 	</div>
 	<div class="sliderContentArea sliderAnim2">
-		<strong>{{ homeName }}</strong>&emsp;{{ compStat.homeStat }}
-		&emsp;
-		<strong>{{ awayName }}</strong>&emsp;{{ compStat.awayStat }}
+		<strong>{{ homeName }}</strong>  {{ compStat.homeStat }}   <strong>{{ awayName }}</strong>  {{ compStat.awayStat }}
 	</div>
 </div>
 
@@ -156,9 +154,34 @@
 				pos: "G",
 				name: "Ben Simmons",
 				stat: "43% FG"
-			}
+			},
+			gameStats: {}
 		}
 	});
+
+	const statNamesTable = {
+					"fgm": "FG Made",
+					"fga": "FG Att.",
+					"fgm3": "3FG Made",
+					"fga3": "3FG Att.",
+					"ftm": "FT Made",
+					"fta": "FT Att.",
+					"tp": "TP",
+					"blk": "Blocks",
+					"stl": "Steals",
+					"ast": "Assists",
+					"min": "Minutes",
+					"oreb": "Off. Reb",
+					"dreb": "Def. Reb",
+					"treb": "Rebounds",
+					"pf": "22",
+					"tf": "0",
+					"to": "Turnovers",
+					"dq": "0",
+					"fgpct": "FG%",
+					"fg3pct": "3FG%",
+					"ftpct": "FT%",
+	}
 
 	function getPlayer(team, num) {
         teamObj = team == "home"? cfg.home : cfg.away
@@ -237,31 +260,44 @@
 		app.homeLth.num = num;
 		app.homeLth.name = player.firstName + " " + player.lastName
 		app.homeLth.pos = player.pos
+
+		var stats = app.gameStats.bbgame.team[1].player.find(x => x.uni == num).stats
+		var pts = (parseInt(stats.fgm) * 2) + parseInt(stats.fgm3) + parseInt(stats.ftm)
+		app.homeLth.stat = `${pts} PTS   ${stats.ast} AST   ${stats.treb} REB`
 	})
 
+	/*
 	nodecg.listenFor('homeLthStat', (stat) => {
 		app.homeLth.stat = stat
 	})
+	*/
 
 	nodecg.listenFor('awayLthNum', (num) => {
 		player = getPlayer("away", num)
 		app.awayLth.num = num;
 		app.awayLth.name = player.firstName + " " + player.lastName
-		app.awayLth.pos = player.pos
+
+		var stats = app.gameStats.bbgame.team[0].player.find(x => x.uni == num).stats
+		var pts = (parseInt(stats.fgm) * 2) + parseInt(stats.fgm3) + parseInt(stats.ftm)
+		console.log(pts)
+		app.awayLth.stat = `${pts} PTS   ${stats.ast} AST   ${stats.treb} REB`
 	})
 
+	/*
 	nodecg.listenFor('awayLthStat', (stat) => {
 		app.awayLth.stat = stat
 	})
+	*/
 
 	const period = nodecg.Replicant('period');
 	period.on('change', (a) => updatePeriod(a));
 
 	function showStat(statName) {
-		var stat = gameData.comparison.find(x => x.STATISTIC === statName)
-		app.compStat.statName = stat.STATISTIC
-		app.compStat.homeStat = stat.DRX
-		app.compStat.awayStat = stat.COL
+		suffix = statName.endsWith('pct')? '%' : ''
+		teams = app.gameStats.bbgame.team
+		app.compStat.statName = statName in statNamesTable? statNamesTable[statName] : statName.toUpperCase()
+		app.compStat.homeStat = teams[1].totals.stats[statName] + suffix
+		app.compStat.awayStat = teams[0].totals.stats[statName] + suffix
 	}
 
 	function updatePeriod(newPeriod) {
@@ -286,6 +322,9 @@
 		app.awayScore = x.awayScore
 		app.shotClock = x.shotClock
 	})
+
+	const liveStatsRep = nodecg.Replicant('liveStat')
+	liveStatsRep.on('change', x => app.gameStats = JSON.parse(JSON.stringify(x)))
 </script>
 
 </body>
